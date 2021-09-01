@@ -16,6 +16,7 @@
     }
   ],
   "dependencies": {
+    "com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts",
     "jp.keijiro.libsoundio": "1.0.3",
     "org.nuget.system.memory": "4.5.3",
     "com.unity.collab-proxy": "1.7.1",

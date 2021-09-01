@@ -1,7 +1,10 @@
 {
     "name": "AudioUtilityToolkit",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "SoundIO.Runtime",
+        "UniRx"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
