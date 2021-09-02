@@ -20,6 +20,8 @@ Assets/ThirdParty/*
 # ================================================================ #
 !Assets/AudioUtilityToolkit
 !Assets/AudioUtilityToolkit.meta
+!Assets/AudioUtilityToolkit.Samples
+!Assets/AudioUtilityToolkit.Samples.meta
 !Assets/AudioUtilityToolkit.Tests
 !Assets/AudioUtilityToolkit.Tests.meta
 
