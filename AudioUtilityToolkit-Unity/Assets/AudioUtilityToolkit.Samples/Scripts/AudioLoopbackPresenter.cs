@@ -32,9 +32,12 @@ namespace AudioUtilityToolkit.Samples
                 // _microphone.Start(device.Name);
                 // _loopbackAudioOut.StartOutput();
 
+                if (_inputStream != null) _inputStream.OnProcessFrame -= OnProcessFrame;
+
                 _inputStream = AudioDeviceDriver.GetInputDevice(device.Name);
-                _inputStream.OnProcessFrame += OnProcessFrame;
                 _loopbackAudioOut.StartOutput(_inputStream.ChannelCount, _inputStream.SampleRate);
+
+                _inputStream.OnProcessFrame += OnProcessFrame;
             })
             .AddTo(this);
 
@@ -44,7 +47,7 @@ namespace AudioUtilityToolkit.Samples
             {
                 if (loopback)
                 {
-                    _loopbackAudioOut.StartOutput();
+                    _loopbackAudioOut.StartOutput(_inputStream.ChannelCount, _inputStream.SampleRate);
                 }
                 else
                 {
@@ -59,7 +62,6 @@ namespace AudioUtilityToolkit.Samples
             // _microphone.OnProcessFrame -= OnProcessFrame;
             // _microphone.Dispose();
             _inputStream.OnProcessFrame -= OnProcessFrame;
-            _inputStream.Dispose();
         }
 
         private void OnProcessFrame(float[] data)
