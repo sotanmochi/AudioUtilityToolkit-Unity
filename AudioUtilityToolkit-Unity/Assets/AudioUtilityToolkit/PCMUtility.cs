@@ -16,7 +16,8 @@ namespace AudioUtilityToolkit
 
             for (int i = 0; i < pcm.Length; i++)
             {
-                dataStream.Write(BitConverter.GetBytes(Convert.ToInt16(pcm[i] * Int16.MaxValue)), 0, sizeof(Int16));
+                // The maximum absolute value of Int16 is 32768.
+                dataStream.Write(BitConverter.GetBytes(Convert.ToInt16(pcm[i] * 32768f)), 0, sizeof(Int16));
             }
 
             return dataStream.ToArray();
