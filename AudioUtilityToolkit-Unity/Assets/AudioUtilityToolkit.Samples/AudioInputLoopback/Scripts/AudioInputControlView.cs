@@ -10,6 +10,8 @@ namespace AudioUtilityToolkit.Samples
     {
         [SerializeField] private Dropdown _selectDropdown;
         [SerializeField] private Toggle _loopbackToggle;
+        [SerializeField] private Text _inputChannelCount;
+        [SerializeField] private Text _loopbackChannelCount;
         
         public IReadOnlyReactiveProperty<(int Index, string Name)> CurrentDevice => _currentItem;
         private ReactiveProperty<(int Index, string Name)> _currentItem = new ReactiveProperty<(int Index, string Name)>();
@@ -53,6 +55,12 @@ namespace AudioUtilityToolkit.Samples
             }
             
             _selectDropdown.RefreshShownValue();
+        }
+
+        public void SetChannelCount(int inputChannelCount, int loopbackChannelCount)
+        {
+            _inputChannelCount.text = $"Input channel count: {inputChannelCount}";
+            _loopbackChannelCount.text = $"Loopback channel count: {loopbackChannelCount}";
         }
     }
 }
