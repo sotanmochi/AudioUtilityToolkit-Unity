@@ -23,7 +23,7 @@ namespace AudioUtilityToolkit.Samples
             _noalloqSampler.Begin();
 
             // Using NoAlloq
-            _data.Where((signal, index) => index % 2 == 0)
+            _data.Where((value, index) => index % 2 == 0)
                     .ToSpanEnumerable()
                     .CopyInto(_buffer);
 
@@ -32,7 +32,7 @@ namespace AudioUtilityToolkit.Samples
             _linqSampler.Begin();
 
             // Using Linq only
-            _data.Where((signal, index) => index % 2 == 0).ToArray();
+            _data.Where((value, index) => index % 2 == 0).ToArray();
 
             _linqSampler.End();
         }
