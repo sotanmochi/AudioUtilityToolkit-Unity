@@ -104,10 +104,14 @@ namespace AudioUtilityToolkit
             Enqueue(MemoryMarshal.Cast<byte, T>(data));
         }
 
-        public void Dequeue(Span<T> dest)
+        public void Dequeue(Span<T> dest, bool fillWithDefaultWhenEmpty = false)
         {
             if (Count == 0)
             {
+                if (fillWithDefaultWhenEmpty)
+                {
+                    dest.Fill(default);
+                }
                 return;
             }
 

@@ -184,6 +184,44 @@ namespace AudioUtilityToolkit.Tests
         }
 
         [Test]
+        public void EmptyBufferDequeueTest01()
+        {
+            var ringBuffer = new RingBuffer<float>(10);
+            var bufferSpan = new Span<float>(_buffer);
+
+            for (int i = 0; i < _buffer.Length; i++)
+            {
+                bufferSpan[i] = 10 * i;
+            }
+
+            ringBuffer.Dequeue(bufferSpan);
+
+            for (int i = 0; i < bufferSpan.Length; i++)
+            {
+                Assert.AreEqual(bufferSpan[i], 10 * i);
+            }
+        }
+
+        [Test]
+        public void EmptyBufferDequeueTest02()
+        {
+            var ringBuffer = new RingBuffer<float>(10);
+            var bufferSpan = new Span<float>(_buffer);
+
+            for (int i = 0; i < _buffer.Length; i++)
+            {
+                bufferSpan[i] = 10 * i;
+            }
+
+            ringBuffer.Dequeue(bufferSpan, fillWithDefaultWhenEmpty: true);
+
+            for (int i = 0; i < bufferSpan.Length; i++)
+            {
+                Assert.AreEqual(bufferSpan[i], 0f);
+            }
+        }
+
+        [Test]
         public void EnqueueByteDataTest()
         {
             // SetUp
