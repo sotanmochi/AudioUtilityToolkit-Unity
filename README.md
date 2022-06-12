@@ -4,6 +4,10 @@
 - Unity 2021.2.8f1
 - Windows 10
 
+## Dependencies
+- [jp.keijiro.libsoundio](https://github.com/keijiro/jp.keijiro.libsoundio)  
+  Licensed under the MIT License.
+
 ## Third party assets
 このプロジェクトには、以下のアセットが含まれています。  
 The following assets are included in this project.
