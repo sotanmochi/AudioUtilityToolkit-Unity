@@ -13,5 +13,5 @@ The following assets are included in this project.
   Copyright (c) 2020 Victor Nicollet
 
 ## License
-このプロジェクトは、サードパーティのアセットを除き、CC0 (Public Domain) でライセンスされています。  
-This project is licensed under CC0 (Public Domain) except for third party assets.
+このプロジェクトは、サードパーティのアセットを除き、[CC0 (Public Domain)](https://creativecommons.org/publicdomain/zero/1.0/deed.ja) でライセンスされています。  
+This project is licensed under [CC0 (Public Domain)](https://creativecommons.org/publicdomain/zero/1.0/deed.en) except for third party assets.
