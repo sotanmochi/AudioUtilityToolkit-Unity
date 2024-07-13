@@ -30,7 +30,7 @@ namespace AudioUtilityToolkit.UnityAudioExtension
         {
             lock (_ringBuffer)
             {
-                _ringBuffer.Dequeue(new Span<float>(data));
+                _ringBuffer.Dequeue(new Span<float>(data), fillWithDefaultWhenEmpty: true);
             }
         }
 
