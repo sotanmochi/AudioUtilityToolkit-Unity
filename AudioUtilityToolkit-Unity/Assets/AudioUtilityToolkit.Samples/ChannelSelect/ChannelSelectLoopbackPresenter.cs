@@ -48,7 +48,7 @@ namespace AudioUtilityToolkit.Samples
                 {
                     _loopbackAudioChannelCount = (int)AudioChannelCount.Stereo;
                 }
-                _loopbackAudioOut.StartOutput(_loopbackAudioChannelCount, _inputStream.SampleRate);
+                _loopbackAudioOut.Play(_loopbackAudioChannelCount, _inputStream.SampleRate);
 
                 _audioInputControlView.SetChannelCount(_inputStream.ChannelCount, _loopbackAudioChannelCount);
 
@@ -66,13 +66,13 @@ namespace AudioUtilityToolkit.Samples
                     {
                         _loopbackAudioChannelCount = (int)AudioChannelCount.Stereo;
                     }
-                    _loopbackAudioOut.StartOutput(_loopbackAudioChannelCount, _inputStream.SampleRate);
+                    _loopbackAudioOut.Play(_loopbackAudioChannelCount, _inputStream.SampleRate);
 
                     _audioInputControlView.SetChannelCount(_inputStream.ChannelCount, _loopbackAudioChannelCount);
                 }
                 else
                 {
-                    _loopbackAudioOut.StopOutput();
+                    _loopbackAudioOut.Stop();
                     _audioInputControlView.SetChannelCount(0, _loopbackAudioChannelCount);
                 }
             })
