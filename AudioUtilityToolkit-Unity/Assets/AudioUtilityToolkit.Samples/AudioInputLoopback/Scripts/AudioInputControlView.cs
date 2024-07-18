@@ -8,11 +8,15 @@ namespace AudioUtilityToolkit.Samples
 {
     public class AudioInputControlView : MonoBehaviour
     {
+        [SerializeField] private Dropdown _loopbackModeDropdown;
         [SerializeField] private Dropdown _selectDropdown;
         [SerializeField] private Toggle _loopbackToggle;
         [SerializeField] private Text _inputChannelCount;
         [SerializeField] private Text _loopbackChannelCount;
-        
+
+        public IReadOnlyReactiveProperty<AudioLoopbackMode> LoopbackMode => _currentLoopbackMode;
+        private ReactiveProperty<AudioLoopbackMode> _currentLoopbackMode = new ReactiveProperty<AudioLoopbackMode>();
+
         public IReadOnlyReactiveProperty<(int Index, string Name)> CurrentDevice => _currentItem;
         private ReactiveProperty<(int Index, string Name)> _currentItem = new ReactiveProperty<(int Index, string Name)>();
         
@@ -23,7 +27,14 @@ namespace AudioUtilityToolkit.Samples
         private string _dropdownMessage = "Select AudioInput";
         
         private void Awake()
-        {            
+        {
+            _loopbackModeDropdown.OnValueChangedAsObservable()
+            .Subscribe(selectedIndex => 
+            {
+                _currentLoopbackMode.Value = (AudioLoopbackMode)selectedIndex;
+            })
+            .AddTo(this);
+
             _selectDropdown.OnValueChangedAsObservable()
             .Subscribe(selectedIndex => 
             {
