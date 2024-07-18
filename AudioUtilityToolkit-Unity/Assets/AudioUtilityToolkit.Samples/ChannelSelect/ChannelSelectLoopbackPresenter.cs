@@ -14,7 +14,7 @@ namespace AudioUtilityToolkit.Samples
     public class ChannelSelectLoopbackPresenter : MonoBehaviour
     {
         [SerializeField] AudioInputControlView _audioInputControlView;
-        [SerializeField] UnityAudioOut _loopbackAudioOut;
+        [SerializeField] UnityAudioOutV1 _loopbackAudioOut;
 
         private InputStream _inputStream;
         private int _loopbackAudioChannelCount = (int)AudioChannelCount.Mono;

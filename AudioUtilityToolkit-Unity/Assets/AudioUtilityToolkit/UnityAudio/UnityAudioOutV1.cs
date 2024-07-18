@@ -5,7 +5,7 @@ using UnityEngine;
 namespace AudioUtilityToolkit.UnityAudioExtension
 {
     [RequireComponent(typeof(AudioSource))]
-    public class UnityAudioOut : MonoBehaviour
+    public class UnityAudioOutV1 : MonoBehaviour
     {
         [SerializeField] private int _channels = (int)ChannelCount.Mono;
         [SerializeField] private int _samplingRate = (int)SamplingRateType.SamplingRate_48000;

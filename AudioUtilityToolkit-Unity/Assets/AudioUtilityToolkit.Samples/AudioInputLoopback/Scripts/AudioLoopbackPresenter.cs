@@ -10,7 +10,7 @@ namespace AudioUtilityToolkit.Samples
     public class AudioLoopbackPresenter : MonoBehaviour
     {
         [SerializeField] AudioInputControlView _audioInputControlView;
-        [SerializeField] UnityAudioOut _loopbackAudioOut;
+        [SerializeField] UnityAudioOutV1 _loopbackAudioOut;
         
         private UnityMicrophone _microphone;
         private InputStream _inputStream;
