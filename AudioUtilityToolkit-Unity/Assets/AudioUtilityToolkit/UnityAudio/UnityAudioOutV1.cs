@@ -7,25 +7,21 @@ namespace AudioUtilityToolkit.UnityAudioExtension
     [RequireComponent(typeof(AudioSource))]
     public class UnityAudioOutV1 : MonoBehaviour
     {
-        [SerializeField] private int _channels = (int)ChannelCount.Mono;
-        [SerializeField] private int _samplingRate = (int)SamplingRateType.SamplingRate_48000;
+        [SerializeField] int _channels = (int)ChannelCount.Mono;
+        [SerializeField] int _samplingRate = (int)SamplingRateType.SamplingRate_48000;
 
-        private AudioSource _audioSource;
-        private int _audioClipSamples;
-        private float _bufferingTimeSec = 1.0f;
+        float _bufferingTimeSec = 1.0f;
+        int _audioFrameDurationMs = 40;
+        int _delayFrames = 2;
 
-        private AudioBuffer _audioBuffer;
+        AudioSource _audioSource;
+        AudioBuffer _audioBuffer;
+        int _audioClipSamples;
+        int _audioFrameDurationSamples;
 
         void Awake()
         {
-            _audioSource = GetComponent<AudioSource>();
-
-            _audioClipSamples = (int)(_samplingRate * _bufferingTimeSec);
-            _audioBuffer = new AudioBuffer(_channels, _samplingRate, _bufferingTimeSec);
-
-            _audioSource.clip = AudioClip.Create("UnityAudioOutput", _audioClipSamples,
-                                    _audioBuffer.Channels, _audioBuffer.SamplingRate, true, OnPcmDataRead);
-            _audioSource.loop = true;
+            CreateNewAudioClip(_channels, _samplingRate, _bufferingTimeSec, _audioFrameDurationMs);
         }
 
         void OnPcmDataRead(float[] output)
@@ -36,21 +32,18 @@ namespace AudioUtilityToolkit.UnityAudioExtension
         public void PushAudioFrame(float[] pcmData)
         {
             _audioBuffer.Enqueue(pcmData);
+
+            if (!_audioSource.isPlaying && (_audioBuffer.Count > _audioFrameDurationSamples * _delayFrames))
+            {
+                _audioSource.Play();
+            }
         }
 
         public void Play(int channels = 1, int samplingRate = 48000)
         {
             if (channels != _audioBuffer.Channels || samplingRate != _audioBuffer.SamplingRate)
             {
-                _channels = channels;
-                _samplingRate = samplingRate;
-                _audioClipSamples = (int)(_samplingRate * _bufferingTimeSec);
-
-                _audioBuffer = new AudioBuffer(_channels, _samplingRate, _bufferingTimeSec);
-
-                _audioSource.clip = AudioClip.Create("UnityAudioOutput", _audioClipSamples,
-                                        _audioBuffer.Channels, _audioBuffer.SamplingRate, true, OnPcmDataRead);
-                _audioSource.loop = true;
+                CreateNewAudioClip(channels, samplingRate, _bufferingTimeSec, _audioFrameDurationMs);
             }
             _audioSource.Play();
         }
@@ -58,6 +51,26 @@ namespace AudioUtilityToolkit.UnityAudioExtension
         public void Stop()
         {
             _audioSource.Stop();
+        }
+
+        void CreateNewAudioClip(int channels, int samplingRate, float bufferingTimeSec, int audioFrameDurationMs)
+        {
+            _channels = channels;
+            _samplingRate = samplingRate;
+            _bufferingTimeSec = bufferingTimeSec;
+            _audioFrameDurationMs = audioFrameDurationMs;
+
+            _audioClipSamples = (int)(_samplingRate * _bufferingTimeSec);
+            _audioBuffer = new AudioBuffer(_channels, _samplingRate, _bufferingTimeSec);
+
+            _audioFrameDurationSamples = (int)(_samplingRate * _audioFrameDurationMs / 1000f);
+
+            if (_audioSource == null)
+            {
+                _audioSource = GetComponent<AudioSource>();
+            }
+            _audioSource.clip = AudioClip.Create("UnityAudioOutput", _audioClipSamples, _channels, _samplingRate, true, OnPcmDataRead);
+            _audioSource.loop = true;
         }
     }
 }
